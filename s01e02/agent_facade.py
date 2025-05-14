@@ -1,4 +1,6 @@
 import requests
+from requests import Response
+
 from s01e02.config import VERIFY_URL, OPENAI_API_KEY
 from common.agent_engine import AgentEngine
 
@@ -9,12 +11,16 @@ class AuthAgent:
 
     def init_process(self) -> str:
         init_message = {
-            "text": "READY",
-            "msgID": "0"
+            "msgID": "0",
+            "text": "READY"
         }
         return self.session.post(VERIFY_URL,json=init_message).content
 
-    def answer_question(self, question: str) -> str:
-        self.engine.answer_robots_authorization(question)
+    def answer_question(self, question: str) -> Response:
+        response = self.engine.answer_robots_authorization(question)
+        print(response)
+        return self.session.post(VERIFY_URL, data=response, headers={"Content-Type":"Application/json; charset=utf-8"}).content
+
+
 
 
