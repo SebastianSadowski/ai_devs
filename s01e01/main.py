@@ -1,6 +1,5 @@
 from requests import HTTPError
-
-from agent_facade import LoginAgent
+from s01e01.agent_facade import LoginAgent
 
 if __name__ == "__main__":
     ag = LoginAgent()
