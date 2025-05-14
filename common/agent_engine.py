@@ -26,3 +26,8 @@ class AgentEngine:
         except Exception as e:
             print(f"OpenAI API error: {e}")
             return "N/A"
+
+    def answer_robots_authorization(self, question: str) -> str:
+        prompt = """
+        
+        """

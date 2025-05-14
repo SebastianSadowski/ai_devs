@@ -1,9 +1,7 @@
-from config import OPENAI_API_KEY
 from requests import HTTPError
-import html_parser
-from agent_engine import AgentEngine
-
-from config import LOGIN_URL, USERNAME, PASSWORD
+import s01e01.html_parser as html_parser
+from common.agent_engine import AgentEngine
+from s01e01.config import LOGIN_URL, USERNAME, PASSWORD, OPENAI_API_KEY
 import requests
 
 print(f"Uruchomiono moduł: {__name__}")
