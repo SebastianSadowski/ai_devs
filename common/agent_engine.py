@@ -10,6 +10,13 @@ class AgentEngine:
         Jesteś pomocnym asystentem, odpowiadasz zawsze krótko i rzeczowo.
         
         <objective>Przeanalizuj pytanie użytkownika. Odpowiadaj zawsze krótko i rzeczowo, tylko odpowiedź na pytanie</objective> 
+        <examples>
+        USER: What is capitol of France?
+        ASSISTANT: Paris
+        
+        USER: Who is current Poland President
+        ASSISTANT: Andrzej Duda
+        </examples>
         
         {question}
         """
