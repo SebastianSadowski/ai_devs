@@ -14,9 +14,24 @@ class OllamaEngine:
 
     def generate(self, prompt: str, temperature: float = 0.0) -> any:
         system_prompt = f"""
+            You are a cryptographer and a specialist in data anonymization. 
+            You are given a text and you need to anonymize it. You answer only in Polish language. 
+            You anonymize first name and last name, city, street with number and age.
+            Your goal is to return data in unchanged format and language, but anonymized. 
+            Anonymization rules: You can use only 'CENZURA' word to anonymize.
+            You anonymize first name and last name as one word, so you use CENZURA once.
+            You anonymize city as one word, so you use CENZURA once
+            You anonymize age as one word, so you use CENZURA once
+            You anonymize street name and number as one word, so you use CENZURA once
         
         {prompt}
         """
+
+        messages = [
+                {"role": "system", "content": f"{system_prompt}"},
+                {"role": "user", "content": f"{prompt}"}
+        ]
+
         payload = {
             "model": self.model,
             "prompt": system_prompt,
@@ -38,18 +53,43 @@ class OllamaEngine:
 
         return response
 
+    def chat(self, prompt: str, temperature: float = 0.0) -> any:
+        system_prompt = f"""
+            You are a cryptographer and a specialist in data anonymization. 
+            You are given a text and you need to anonymize it. You answer only in Polish language. 
+            You anonymize first name and last name, city, street with number and age.
+            Your goal is to return data in unchanged format and language, but anonymized. 
+            Anonymization rules: You can use only 'CENZURA' word to anonymize.
+            You anonymize first name and last name as one word, so you use CENZURA once.
+            You anonymize city as one word, so you use CENZURA once
+            You anonymize age as one word, so you use CENZURA once
+            You anonymize street name and number as one word, so you use CENZURA once
 
+        """
 
+        messages = [
+            {"role": "system", "content": f"{system_prompt}"},
+            {"role": "user", "content": f"{prompt}"}
+        ]
 
-if __name__ == "__main__":
-        parser = argparse.ArgumentParser(description="Wykonaj inferencję z modelem Ollama")
-        parser.add_argument("prompt", type=str, help="Tekst wejściowy (prompt)")
-        parser.add_argument("--model", type=str, default="mistral", help="Nazwa modelu (domyślnie: mistral)")
-        parser.add_argument("--stream", action="store_true", default=False,
-                            help="Czy używać streamowania (strumieniowania odpowiedzi)")
+        payload = {
+            "model": self.model,
+            "messages": messages,
+            "stream": False,
+            "temperature": temperature
+        }
 
-        args = parser.parse_args()
-        print(args)
-        result = generate_response(args.model, args.prompt, args.stream)
-        if result:
-            print(result)
+        try:
+            response = self.session.post(f"{self.base_url}/api/chat", json=payload)
+            response.raise_for_status()
+
+            response = json.loads(response.text)
+            print(
+            f"Total tokens: {response['prompt_eval_count'] + response['eval_count']}, prompt tokens: {response['prompt_eval_count']}, completion tokens: {response['eval_count']}")
+
+        except Exception as e:
+            print(f"Ollama error: {e}")
+            return "N/A"
+
+        return response
+

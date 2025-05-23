@@ -47,7 +47,7 @@ class CentralaClient:
         data = prepare_answer(task_id, apikey, payload)
 
 
-
+        print(f"centrala body: \n {data}")
         response = self.session.post(url,
                         data=data,
                         headers=headers,
