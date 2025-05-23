@@ -2,7 +2,7 @@ import requests
 from requests import Response
 
 from s01e02.config import VERIFY_URL, OPENAI_API_KEY
-from common.agent_engine import AgentEngine
+from common.models.agent_engine import AgentEngine
 
 class AuthAgent:
     def __init__(self):

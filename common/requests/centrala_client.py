@@ -29,7 +29,7 @@ class CentralaClient:
             **kwargs
         )
         response.raise_for_status()
-        return response.json()
+        return response
 
     def post_answer(
             self,
@@ -55,7 +55,7 @@ class CentralaClient:
                         **kwargs
         )
         response.raise_for_status()
-        return response.json()
+        return response
 
 
 

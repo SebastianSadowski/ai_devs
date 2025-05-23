@@ -1,6 +1,6 @@
 from requests import HTTPError
 import s01e01.html_parser as html_parser
-from common.agent_engine import AgentEngine
+from common.models.agent_engine import AgentEngine
 from s01e01.config import LOGIN_URL, USERNAME, PASSWORD, OPENAI_API_KEY
 import requests
 
