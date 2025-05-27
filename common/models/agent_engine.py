@@ -85,3 +85,20 @@ class AgentEngine:
         except Exception as e:
             print(f"OpenAI API error: {e}")
             return "N/A"
+
+    def generate(self,prompt: str)->str:
+        try:
+            res = self.client.chat.completions.create(
+                model="o4-mini",
+                # model="gpt-3.5-turbo",
+                messages=[{"role": "user", "content": prompt}],
+
+            )
+
+            print(
+                f"Total tokens: {res.usage.total_tokens}, prompt tokens: {res.usage.prompt_tokens}, completion tokens: {res.usage.completion_tokens}")
+            return res.choices[0].message.content
+
+        except Exception as e:
+            print(f"OpenAI API error: {e}")
+            return "N/A"
